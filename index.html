@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approfondir la connaissance client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Fiche d'exercices en thème clair : blocs = séances, cartes dépliables, corrections masquables */
+:root {
+  --bg:        #f4f6f9;
+  --surface:   #ffffff;
+  --card:      #ffffff;
+  --border:    #dfe3ea;
+  --border-hi: #b9c0ce;
+  --text:      #1d2230;
+  --text-dim:  #5c6476;
+  --accent:    #b97d00;
+  --accent-bg: #fff6df;
+  --green:     #1b8047;
+  --green-bg:  #ecf7f0;
+  --green-bd:  #c9e6d4;
+  --green-dk:  #12552f;
+  --red:       #c23b3b;
+  --blue:      #2d69ad;
+  --blue-bg:   #edf3fb;
+  --purple:    #6f45ad;
+  --font-head: 'Syne', 'Trebuchet MS', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --radius:    10px;
+  color-scheme: light;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── HEADER ──────────────────────────────────────────────── */
+.site-header {
+  background: linear-gradient(135deg, #ffffff 0%, #eef2f8 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 44px 20px 32px;
+  text-align: center;
+}
+.site-header .kicker {
+  display: inline-block;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 3px;
+  margin-bottom: 18px;
+}
+.site-header h1 {
+  font-family: var(--font-head);
+  font-size: clamp(24px, 6vw, 38px);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.site-header .sub {
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 400;
+  max-width: 540px;
+  margin: 0 auto 20px;
+}
+.legende {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 0 auto 22px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+
+/* ── NAV ANCRES ──────────────────────────────────────────── */
+.nav-anchors {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-anchors a {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.nav-anchors a:hover, .nav-anchors a:focus-visible { border-color: var(--accent); color: var(--accent); }
+
+/* ── CONTENEUR PRINCIPAL ─────────────────────────────────── */
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 36px 18px 80px;
+}
+
+/* ── TITRE DE BLOC ───────────────────────────────────────── */
+.bloc-titre {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 52px 0 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.bloc-titre:first-child { margin-top: 0; }
+.bloc-titre .icone { font-size: 26px; flex-shrink: 0; }
+.bloc-titre h2 {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.bloc-titre h2 small {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+/* ── MÉMO ────────────────────────────────────────────────── */
+.memo {
+  background: var(--green-bg);
+  border: 1px solid var(--green-bd);
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin: 16px 0 24px;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.memo .memo-titre {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.memo code {
+  display: block;
+  background: #ffffff;
+  border: 1px solid var(--green-bd);
+  border-radius: 5px;
+  padding: 8px 12px;
+  color: var(--green-dk);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 13.5px;
+  margin: 5px 0;
+}
+.memo .note { color: var(--text-dim); font-size: 13px; margin-top: 8px; }
+
+/* ── CARTE EXERCICE ──────────────────────────────────────── */
+.exo-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.exo-card:hover { border-color: var(--border-hi); }
+
+.exo-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+.exo-header::-webkit-details-marker { display: none; }
+.exo-header:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.exo-num {
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  flex-shrink: 0;
+  min-width: 40px;
+}
+.badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.badge-1 { background: #e9f6ee; color: var(--green); border: 1px solid #bfe2cc; }
+.badge-2 { background: var(--accent-bg); color: #8a5d00; border: 1px solid #efd798; }
+.badge-3 { background: #fbeaea; color: var(--red); border: 1px solid #efc4c4; }
+.badge-exam { background: #f2ecfa; color: var(--purple); border: 1px solid #d9c9ef; }
+
+.exo-titre-txt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1 1 200px;
+  min-width: 0;
+}
+.chevron { color: var(--text-dim); font-size: 13px; flex-shrink: 0; transition: transform .2s; }
+details[open] .chevron { transform: rotate(180deg); }
+
+/* ── CORPS DE L'EXERCICE ─────────────────────────────────── */
+.exo-body { padding: 0 16px 20px; border-top: 1px solid var(--border); }
+
+.contexte {
+  background: var(--blue-bg);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 16px;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.75;
+}
+.contexte strong { color: var(--text); }
+
+.table-wrap { overflow-x: auto; margin: 12px 0; }
+.tableau-donnees {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: var(--surface);
+}
+.tableau-donnees th {
+  background: #eef1f6;
+  color: var(--text-dim);
+  font-family: var(--font-head);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.tableau-donnees td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: top;
+}
+.tableau-donnees tr:last-child td { border-bottom: none; }
+.tableau-donnees td.num { font-weight: 700; color: var(--text); white-space: nowrap; }
+
+.questions { margin: 18px 0 0; }
+.question { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+.question .q-num {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  background: var(--accent);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 11px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.question p { font-size: 14px; margin: 0; min-width: 0; }
+
+/* ── COUP DE POUCE ───────────────────────────────────────── */
+.ordre-grandeur {
+  background: var(--accent-bg);
+  border: 1px solid #efd798;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #6e4b00;
+  margin: 12px 0 0;
+}
+.ordre-grandeur::before { content: "💡 "; }
+
+/* ── BOUTON CORRECTION ───────────────────────────────────── */
+.btn-corrige {
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 16px;
+  margin-top: 18px;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-corrige:hover, .btn-corrige:focus-visible { border-color: var(--green); color: var(--green); }
+
+/* ── CORRECTION ──────────────────────────────────────────── */
+.correction {
+  display: none;
+  background: var(--green-bg);
+  border: 1px solid var(--green-bd);
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.correction.visible { display: block; }
+.correction .corr-etape {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--green-bd);
+}
+.correction .corr-etape:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.correction .c-num {
+  display: inline-block;
+  background: var(--green);
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 10px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 18px;
+  margin-right: 6px;
+}
+.correction code {
+  display: block;
+  background: #ffffff;
+  border: 1px solid var(--green-bd);
+  border-radius: 4px;
+  padding: 6px 12px;
+  color: var(--green-dk);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  margin: 5px 0;
+}
+.correction .res { font-family: var(--font-head); font-weight: 700; color: var(--text); }
+.correction .conclu { margin-top: 8px; font-size: 13.5px; color: #2c6244; font-style: italic; }
+.correction .tableau-corr { width: 100%; border-collapse: collapse; font-size: 13px; margin: 8px 0; background: #ffffff; }
+.correction .tableau-corr th {
+  background: #dff0e6;
+  color: var(--green-dk);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  text-align: left;
+}
+.correction .tableau-corr td { padding: 6px 10px; border-bottom: 1px solid var(--green-bd); color: #24402f; vertical-align: top; }
+.correction .tableau-corr td.val { font-weight: 700; color: var(--green); }
+
+/* ── SÉPARATEUR ──────────────────────────────────────────── */
+hr.section-sep { border: none; border-top: 1px solid var(--border); margin: 54px 0 0; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 12px;
+  background: var(--surface);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .exo-titre-txt { font-size: 13.5px; }
+  .contexte { font-size: 13.5px; }
+  .tableau-donnees { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="kicker">🤝 Bloc 1 – BTS CCST 2e année · épreuve E5</div>
+  <h1>Approfondir<br>la connaissance client</h1>
+  <p class="sub">Chapitre 8. 34 exercices en 10 séances, avec l'entreprise RESO. Ouvre un exercice, réponds sur ton ordinateur, puis vérifie avec la correction.</p>
+  <div class="legende">
+    <span class="badge badge-1">⬆ décollage</span> je découvre
+    <span class="badge badge-2">◆ intermédiaire</span> j'applique
+    <span class="badge badge-exam">★ examen</span> je m'entraîne
+  </div>
+  <nav class="nav-anchors">
+    <a href="#referentiel">0 · Repères</a>
+    <a href="#clients">1 · Les types de clients</a>
+    <a href="#motivations">2 · Besoins et motivations</a>
+    <a href="#processus">3 · Le processus d'achat</a>
+    <a href="#centre">4 · Le centre d'achat</a>
+    <a href="#sociogramme">5 · Organigramme et sociogramme</a>
+    <a href="#crm">6 · La fiche client dans le CRM</a>
+    <a href="#leads">7 · Des leads au CRM</a>
+    <a href="#donnees">8 · Exploiter les données</a>
+    <a href="#strategie">9 · Personas et stratégie</a>
+    <a href="#examen">10 · Sujets type examen</a>
+  </nav>
+</header>
+
+<main>
+
+<div class="bloc-titre" id="referentiel">
+  <span class="icone">📌</span>
+  <h2><small>Repères · référentiel BTS CCST</small>Ce que tu travailles dans ce chapitre</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 épreuve E5 – bloc 1</div>
+  <code>Critères d'évaluation : le contexte technico-commercial et les attentes du prospect sont identifiés · les objectifs de négociation sont définis et adaptés · des outils de négociation adaptés sont préparés · une démarche proactive de négociation est mise en œuvre.</code>
+  <code>Objectif final : à partir des données d'un client ou prospect, présenter à l'oral en 5 minutes son profil, son processus et son centre d'achat, puis la stratégie de négociation qui en découle (objectifs et outils).</code>
+</div>
+<hr class="section-sep">
+
+<!-- BLOC 1 -->
+<div class="bloc-titre" id="clients">
+  <span class="icone">🧭</span>
+  <h2><small>Séance 1</small>Bloc 1 – Qui sont les clients de RESO ?</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>B to C = vente aux particuliers · B to B = vente aux entreprises (TPE/PME, grandes entreprises, distributeurs) · B to G = vente aux administrations.</code>
+  <code>Clients actuels (effectifs) = clients de l'entreprise + clients des concurrents.</code>
+  <code>Non-consommateurs relatifs (NCR) = ne consomment pas aujourd'hui mais peuvent le devenir.</code>
+  <code>Non-consommateurs absolus (NCA) = ne pourront jamais consommer le produit.</code>
+  <code>Clients potentiels théoriques = clients actuels + NCR.</code>
+  <code>Part de marché (demande effective) = clients de l'entreprise / clients actuels.</code>
+  <code>Part de marché (demande potentielle) = clients de l'entreprise / clients potentiels théoriques.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 1</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">B to B, B to C ou B to G ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Tu es technico-commercial(e) en alternance chez <strong>RESO</strong>. RESO conçoit et vend des logiciels de gestion de la relation client (CRM) et des applications pour tablettes et smartphones. Ta tutrice te transmet la liste des derniers contacts entrants.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Contact</th><th>Description</th></tr></thead><tbody><tr><td>A</td><td>Boulangerie Lemoine, 4 salariés, dirigée par son fondateur</td></tr><tr><td>B</td><td>OXO, PME de 45 salariés avec un directeur commercial et un directeur marketing</td></tr><tr><td>C</td><td>Communauté de communes du Val Fleuri</td></tr><tr><td>D</td><td>Bureau Plus, revendeur de matériel informatique qui veut référencer les applications RESO</td></tr><tr><td>E</td><td>Clinique des Tilleuls, 300 salariés, avec un service achats</td></tr><tr><td>F</td><td>Un particulier qui veut l'application pour gérer son club de pétanque</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Classe chaque contact : B to C, B to B (TPE/PME, grande entreprise, distributeur) ou B to G.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Pour chaque type, indique qui négocie face à toi.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> la taille et la structure du client changent ton interlocuteur.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Contact</th><th>Type</th><th>Qui négocie ?</th></tr></thead><tbody><tr><td>A</td><td>B to B – TPE</td><td class="val">le dirigeant, directement</td></tr><tr><td>B</td><td>B to B – PME</td><td class="val">souvent le dirigeant, avec un ou deux directeurs</td></tr><tr><td>C</td><td>B to G – administration</td><td class="val">plusieurs acteurs publics (marché public)</td></tr><tr><td>D</td><td>B to B – distributeur</td><td class="val">un acheteur, avec un accord de référencement</td></tr><tr><td>E</td><td>B to B – grande entreprise</td><td class="val">un centre d'achat de plusieurs personnes</td></tr><tr><td>F</td><td>B to C – particulier</td><td class="val">le particulier lui-même</td></tr></tbody></table></div></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 2</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Calculer la part de marché de RESO</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Dans le département, RESO a recensé <strong>4 800 PME</strong>. 1 500 utilisent déjà un CRM, dont 240 celui de RESO. 2 700 n'en utilisent pas mais pourraient s'équiper. 600 sont en cessation d'activité.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Identifie les clients actuels, les NCR et les NCA.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Calcule le nombre de clients potentiels théoriques.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Calcule les deux parts de marché de RESO (arrondi à 0,1 %).</p></div>
+      <div class="question"><span class="q-num">4</span><p>Que peut conclure ta tutrice ?</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> clients potentiels théoriques = clients actuels + NCR. Les NCA ne comptent jamais.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Clients actuels = 1 500 · NCR = 2 700 · NCA = 600.</div>
+      <div class="corr-etape"><span class="c-num">2</span> <code>Clients potentiels théoriques = 1 500 + 2 700 = 4 200</code></div>
+      <div class="corr-etape"><span class="c-num">3</span> <code>PDM demande effective = 240 / 1 500 = 16,0 %</code><code>PDM demande potentielle = 240 / 4 200 = 5,7 %</code></div>
+      <div class="corr-etape"><span class="c-num">4</span> <p class="res">RESO détient 16 % du marché actuel mais seulement 5,7 % du marché potentiel.</p><p class="conclu">La marge de progression est forte : les 2 700 NCR sont une cible de prospection.</p></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 3</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Présenter le client de ta fiche descriptive</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">À l'oral de l'épreuve E5, tu dois présenter les acteurs de ta situation de négociation, dont l'entreprise cliente ou prospecte.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Prépare une présentation orale de 1 minute de ton client ou prospect : type de client, taille, activité.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Situe-le : client actuel de ton entreprise, client de la concurrence ou NCR ?</p></div>
+      <div class="question"><span class="q-num">3</span><p>Passe à l'oral devant un binôme, qui chronomètre.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> commence par une phrase simple : « mon client est une PME de… qui… ».</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Attendus : type de client (B to B, B to G…), taille (effectif, chiffre d'affaires si connu), activité technique, place dans le portefeuille de ton entreprise.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Un prospect qui travaille avec un concurrent est un client actuel du marché mais pas de ton entreprise : c'est un argument pour justifier l'enjeu de l'entretien.</div>
+      <div class="corr-etape"><span class="c-num">3</span> <p class="conclu">Ces éléments correspondent au critère « le contexte technico-commercial et les attentes du prospect sont identifiés ».</p></div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 2 -->
+<div class="bloc-titre" id="motivations" style="margin-top:40px">
+  <span class="icone">💭</span>
+  <h2><small>Séance 2</small>Bloc 2 – Pourquoi le client achète (ou pas) ?</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Besoin = sentiment de manque. Pyramide de Maslow : 1. physiologiques · 2. sécurité · 3. appartenance · 4. estime · 5. accomplissement.</code>
+  <code>Motivations (ce qui pousse à acheter) : oblatives (faire plaisir aux autres) · hédonistes (se faire plaisir) · auto-expression (se distinguer).</code>
+  <code>Freins (ce qui empêche d'acheter) : peurs · inhibitions · risques.</code>
+  <code>Motivations rationnelles (utilitaires) ou psychologiques (confiance en soi, image).</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 4</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Les besoins d'une entreprise cliente</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Le dirigeant de la boulangerie Lemoine liste ses projets de l'année.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Projet</th><th>Description</th></tr></thead><tbody><tr><td>1</td><td>Souscrire une assurance contre le piratage informatique</td></tr><tr><td>2</td><td>Adhérer au club des entreprises de la ville</td></tr><tr><td>3</td><td>Se présenter au concours du meilleur croissant du département</td></tr><tr><td>4</td><td>Se former pour ouvrir un salon de thé, un rêve de longue date</td></tr><tr><td>5</td><td>Installer une fontaine à eau pour l'équipe</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Associe chaque projet à un niveau de la pyramide de Maslow.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel niveau un CRM peut-il aussi satisfaire ? Justifie.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> part du bas de la pyramide : survie, puis protection, puis groupe, puis image, puis dépassement.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Projet</th><th>Niveau</th></tr></thead><tbody><tr><td>1</td><td class="val">2. sécurité</td></tr><tr><td>2</td><td class="val">3. appartenance</td></tr><tr><td>3</td><td class="val">4. estime</td></tr><tr><td>4</td><td class="val">5. accomplissement</td></tr><tr><td>5</td><td class="val">1. physiologique</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Réponse ouverte, par exemple : sécurité (les données clients sont sauvegardées) ou estime (l'entreprise paraît plus moderne et plus professionnelle).</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 5</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Motivation ou frein ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Pendant ses rendez-vous, ta tutrice a noté des phrases de prospects au sujet du CRM RESO.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>N°</th><th>Phrase entendue</th></tr></thead><tbody><tr><td>a</td><td>« Avec cet outil, notre équipe sera la plus moderne du groupe. »</td></tr><tr><td>b</td><td>« Je veux que mes commerciaux travaillent plus sereinement, ils le méritent. »</td></tr><tr><td>c</td><td>« L'interface est agréable, c'est un plaisir de l'utiliser. »</td></tr><tr><td>d</td><td>« Et si nos données clients étaient piratées ? »</td></tr><tr><td>e</td><td>« J'ai peur de ne pas savoir m'en servir devant mon équipe. »</td></tr><tr><td>f</td><td>« Un logiciel premier prix ? Pas question pour notre image. »</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Classe chaque phrase : motivation (oblative, hédoniste, auto-expression) ou frein (peur, inhibition, risque).</p></div>
+      <div class="question"><span class="q-num">2</span><p>Pour deux freins, propose une réponse du commercial.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> un frein n'est pas un refus : c'est une information à traiter.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>N°</th><th>Classement</th></tr></thead><tbody><tr><td>a</td><td class="val">motivation d'auto-expression</td></tr><tr><td>b</td><td class="val">motivation oblative</td></tr><tr><td>c</td><td class="val">motivation hédoniste</td></tr><tr><td>d</td><td class="val">frein : risque</td></tr><tr><td>e</td><td class="val">frein : peur</td></tr><tr><td>f</td><td class="val">frein : inhibition</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Exemples de réponses : (d) présenter les garanties de sécurité et d'hébergement des données prévues dans l'offre · (e) proposer une formation des utilisateurs et un accompagnement à la prise en main.</div>
+      <div class="corr-etape"><span class="c-num">3</span> <p class="conclu">Repérer les motivations et les freins sert à construire l'argumentation et le traitement des objections.</p></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 6</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Jeu de rôle : faire parler le client</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Par deux. L'un joue le dirigeant de la boulangerie Lemoine, qui hésite à acheter un CRM. Il choisit en secret une motivation et un frein. L'autre joue le commercial RESO.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Commercial : pose 4 questions ouvertes pour découvrir la motivation et le frein (3 minutes).</p></div>
+      <div class="question"><span class="q-num">2</span><p>Reformule ce que tu as compris.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Inversez les rôles.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> une question ouverte commence par « comment », « pourquoi », « qu'est-ce que »…</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Exemples de questions : « comment suivez-vous vos clients aujourd'hui ? » · « qu'est-ce qui vous ferait changer d'outil ? » · « qu'est-ce qui vous inquiète dans ce projet ? » · « qui utilisera le logiciel ? ».</div>
+      <div class="corr-etape"><span class="c-num">2</span> Une bonne reformulation commence par « si je comprends bien… » et se termine par une question de validation.</div>
+      <div class="corr-etape"><span class="c-num">3</span> <p class="conclu">C'est la phase de découverte de l'entretien de vente (compétence C1.4 : analyser les besoins actuels d'un client).</p></div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 3 -->
+<div class="bloc-titre" id="processus" style="margin-top:40px">
+  <span class="icone">🔄</span>
+  <h2><small>Séance 3</small>Bloc 3 – Les étapes du processus d'achat</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>5 étapes : prise de conscience d'un besoin → recherche d'informations → évaluation des solutions → prise de décision → évaluation post-achat.</code>
+  <code>Achat réfléchi : toutes les étapes, longues · achat impulsif : processus raccourci · achat répétitif : processus court.</code>
+  <code>Intervenants en B to C : prescripteur, leader, conseiller, décideur, acheteur, payeur, utilisateur.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 7</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Remettre les étapes dans l'ordre</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">La Clinique des Tilleuls a acheté des tablettes avec l'application RESO pour ses infirmières. Voici, dans le désordre, ce qui s'est passé.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Lettre</th><th>Événement</th></tr></thead><tbody><tr><td>a</td><td>La clinique compare trois devis</td></tr><tr><td>b</td><td>Six mois après, elle mesure le temps gagné par les équipes</td></tr><tr><td>c</td><td>Les infirmières perdent du temps à saisir les dossiers sur papier</td></tr><tr><td>d</td><td>La directrice signe le bon de commande de RESO</td></tr><tr><td>e</td><td>Le service achats consulte des sites et un salon professionnel</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Remets les événements dans l'ordre des 5 étapes.</p></div>
+      <div class="question"><span class="q-num">2</span><p>À quelle étape le commercial doit-il être présent ? Justifie.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> la première étape est toujours un manque, jamais une recherche.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <code>c (besoin) → e (informations) → a (évaluation) → d (décision) → b (post-achat)</code></div>
+      <div class="corr-etape"><span class="c-num">2</span> À toutes les étapes : au plus tôt pour influencer le cahier des charges, et après l'achat pour mesurer la satisfaction et fidéliser.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 8</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Réfléchi, impulsif ou répétitif ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Quatre achats observés chez des clients de RESO.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Cas</th><th>Achat</th></tr></thead><tbody><tr><td>1</td><td>OXO renouvelle chaque année ses licences CRM</td></tr><tr><td>2</td><td>La Communauté de communes équipe 40 agents de tablettes</td></tr><tr><td>3</td><td>Un artisan achète une coque de tablette vue en caisse</td></tr><tr><td>4</td><td>Une PME remplace tout son système d'information</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Indique le type d'achat de chaque cas.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Dans quel cas le processus est-il le plus long ? Pourquoi ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Cas</th><th>Type</th></tr></thead><tbody><tr><td>1</td><td class="val">répétitif</td></tr><tr><td>2</td><td class="val">réfléchi</td></tr><tr><td>3</td><td class="val">impulsif</td></tr><tr><td>4</td><td class="val">réfléchi</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Cas 2 et 4 : l'investissement est important et le risque élevé, donc toutes les étapes sont suivies, avec plusieurs intervenants.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 9</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Classer les questions à poser aux clients</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">L'entreprise <strong>Révisions Vacances</strong>, cliente de RESO, vend des séances de révision de cours aux parents soucieux de la scolarité de leurs enfants, et des séjours pédagogiques où les enfants s'amusent tout en révisant. Elle veut intégrer un questionnaire dans son CRM pour mieux connaître ses clients. Voici les 21 questions proposées.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>N°</th><th>Question à poser aux clients</th></tr></thead><tbody><tr><td>1</td><td>Que recherchez-vous sur notre site ?</td></tr><tr><td>2</td><td>Qu'est-ce qui vous a décidé(e) à choisir notre service ?</td></tr><tr><td>3</td><td>Êtes-vous satisfait(e) de votre achat ?</td></tr><tr><td>4</td><td>Quels types de services vous intéressent ?</td></tr><tr><td>5</td><td>Quels sont vos centres d'intérêt ?</td></tr><tr><td>6</td><td>Seriez-vous prêt(e) à recommander nos offres à votre entourage ?</td></tr><tr><td>7</td><td>Qu'est-ce qui a éveillé votre intérêt pour nos offres ?</td></tr><tr><td>8</td><td>Qu'avez-vous pensé du processus de commande ?</td></tr><tr><td>9</td><td>Avez-vous facilement trouvé les renseignements que vous recherchiez ?</td></tr><tr><td>10</td><td>Pour quelle occasion souhaitez-vous acquérir ce type de service ?</td></tr><tr><td>11</td><td>Pensez-vous acheter de nouveaux services à l'avenir ?</td></tr><tr><td>12</td><td>Qu'a (ont) pensé votre (vos) enfant(s) de son (leur) séjour ?</td></tr><tr><td>13</td><td>Qu'est-ce qui vous a incité(e) à visiter notre site internet ?</td></tr><tr><td>14</td><td>Avez-vous rencontré des freins lors de la réalisation de votre commande ? Si oui, lesquels ?</td></tr><tr><td>15</td><td>Le service que vous avez choisi est-il à la hauteur de vos attentes ?</td></tr><tr><td>16</td><td>Seriez-vous prêt(e) à renouveler votre achat ?</td></tr><tr><td>17</td><td>Quel est votre mode de paiement préféré ?</td></tr><tr><td>18</td><td>Avez-vous parcouru les pages de notre site pour faire votre recherche ? Si oui, qu'en avez-vous pensé ?</td></tr><tr><td>19</td><td>À quelle occasion pensez-vous commander de nouveaux services chez nous ?</td></tr><tr><td>20</td><td>Que pensez-vous de notre catalogue ?</td></tr><tr><td>21</td><td>Quels changements permettraient d'améliorer au mieux notre nouvelle offre ?</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Classe les 21 questions en trois groupes : avant l'achat, pendant l'achat, après l'acte d'achat.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Propose 3 questions destinées aux enfants, bénéficiaires des séjours. Précise leur rôle dans le processus d'achat.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Transpose : propose 3 questions pour les utilisateurs d'un CRM chez un client B to B.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> « avant » = découvrir le besoin et la recherche · « pendant » = la commande · « après » = satisfaction et fidélité.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <code>Avant : 1, 4, 5, 7, 9, 10, 13, 18, 20</code><code>Pendant : 2, 8, 14, 17</code><code>Après : 3, 6, 11, 12, 15, 16, 19, 21</code>Certaines questions peuvent se discuter (2, 8, 20) : un classement justifié est accepté.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Les enfants sont les utilisateurs, et souvent des prescripteurs ou des leaders : ils influencent le choix des parents. Exemples : « quelles matières veux-tu réviser ? » · « quelles activités aimes-tu ? » · « as-tu envie de repartir ? ».</div>
+      <div class="corr-etape"><span class="c-num">3</span> Exemples : « quelles tâches vous prennent le plus de temps ? » · « quelles informations clients vous manquent ? » · « sur quel appareil travaillez-vous en déplacement ? ».</div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 4 -->
+<div class="bloc-titre" id="centre" style="margin-top:40px">
+  <span class="icone">🏢</span>
+  <h2><small>Séance 4</small>Bloc 4 – Qui décide en B to B et en B to G ?</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>En B to B, la vente est multi-décisionnelle : un seul interlocuteur en TPE, de nombreux interlocuteurs dans une grande entreprise.</code>
+  <code>Acheteur : définit les conditions d'achat, choisit les fournisseurs, négocie · utilisateur : utilise le produit, évalue les besoins · prescripteur : influence la décision (expert) · conseiller : influence informelle (relation) · décideur : prend la décision finale.</code>
+  <code>En B to G : utilisateur (perçoit le besoin) · acheteur (service technique, cahier des charges) · bureau des marchés (passe le contrat) · comptable du Trésor (paie).</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 10</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Le centre d'achat de la Clinique des Tilleuls</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">RESO répond à un projet de la Clinique des Tilleuls. Voici les personnes rencontrées.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Personne</th><th>Ce qu'elle fait dans le projet</th></tr></thead><tbody><tr><td>Mme Roux, directrice</td><td>Signera le contrat et engage la clinique</td></tr><tr><td>M. Faure, service achats</td><td>Rédige l'appel d'offres et négocie les prix</td></tr><tr><td>Les infirmières cheffes</td><td>Testeront l'application tous les jours</td></tr><tr><td>Un consultant informatique</td><td>Recommande une solution compatible avec le système existant</td></tr><tr><td>Un ami de la directrice, médecin</td><td>Lui donne son avis lors d'un dîner</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Donne le rôle de chaque personne dans le centre d'achat.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel lien est formel ? Lequel est informel ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Personne</th><th>Rôle</th></tr></thead><tbody><tr><td>Mme Roux</td><td class="val">décideur</td></tr><tr><td>M. Faure</td><td class="val">acheteur</td></tr><tr><td>Infirmières cheffes</td><td class="val">utilisateurs</td></tr><tr><td>Consultant</td><td class="val">prescripteur</td></tr><tr><td>Ami médecin</td><td class="val">conseiller</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Liens formels : décideur, acheteur, utilisateurs, prescripteur (fonctions dans l'organigramme ou mission officielle). Lien informel : le conseiller (relation personnelle).</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 11</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Vendre à une administration</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">La Communauté de communes du Val Fleuri veut équiper les agents du service voirie de tablettes avec une application de suivi des interventions.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Identifie les 4 personnes qui interviennent dans la décision.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel document le service technique va-t-il rédiger ?</p></div>
+      <div class="question"><span class="q-num">3</span><p>Pourquoi l'acheteur public est-il prudent ?</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> relis le mémo : 4 acteurs interviennent en B to G.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Utilisateur : les agents de voirie · acheteur : le service technique · bureau des marchés : passe le contrat et en assure le suivi administratif · comptable du Trésor : effectue le paiement.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Un cahier des charges technique.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Il gère l'argent des contribuables : il doit en justifier le bon usage dans l'intérêt général.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 12</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Débat : TPE, grande entreprise ou administration ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Trois équipes. Chaque équipe défend l'idée que son type de client est le plus difficile à convaincre : la boulangerie Lemoine (TPE), la Clinique des Tilleuls (grande entreprise), la Communauté de communes (B to G).</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Prépare 3 arguments en 5 minutes.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Présente-les en 1 minute.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Vote final : quelle conséquence pour le commercial a été la mieux expliquée ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> TPE : un seul décideur, peu informé, budget limité, peu de temps.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Grande entreprise : plusieurs interlocuteurs aux intérêts parfois opposés, processus long, service achats exigeant.</div>
+      <div class="corr-etape"><span class="c-num">3</span> B to G : procédures de marché public, cahier des charges strict, délais de paiement.</div>
+      <div class="corr-etape"><span class="c-num">4</span> <p class="conclu">Le commercial adapte sa stratégie au circuit de décision : à décrire dans la fiche descriptive (rôle des interlocuteurs dans la situation d'achat).</p></div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 5 -->
+<div class="bloc-titre" id="sociogramme" style="margin-top:40px">
+  <span class="icone">🕸️</span>
+  <h2><small>Séance 5</small>Bloc 5 – Décrypter les relations chez OXO</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Organigramme = structure formelle (liens hiérarchiques).</code>
+  <code>Sociogramme = relations informelles entre les personnes : coopération, indifférence, conflit.</code>
+  <code>Le commercial B to B identifie les circuits formels et informels de décision pour repérer qui a le plus d'influence.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 13</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Lire l'organigramme-sociogramme d'OXO</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta tutrice chez <strong>RESO</strong> te confie la gestion d'un portefeuille de PME clientes, dont <strong>OXO</strong>. Elle te met en garde : un client B to B est comme une « boîte noire » à déchiffrer. Elle te transmet ce qu'elle sait de l'organigramme et des relations entre les personnes chez OXO.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Personne</th><th>Fonction</th><th>Rattachée à</th></tr></thead><tbody><tr><td>Kenza Bénard</td><td>directrice générale</td><td>–</td></tr><tr><td>Alexandre Kangol</td><td>directeur marketing</td><td>Kenza Bénard</td></tr><tr><td>Paul Green</td><td>directeur commercial</td><td>Kenza Bénard</td></tr><tr><td>Vincent Capin</td><td>assistant marketing</td><td>Alexandre Kangol</td></tr><tr><td>Hugo Lucciano</td><td>assistant commercial</td><td>Paul Green</td></tr><tr><td>Inès Barka</td><td>assistante commerciale</td><td>Paul Green</td></tr></tbody></table></div><div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Type de relation</th><th>Entre</th></tr></thead><tbody><tr><td>🟢 coopération</td><td>Kenza Bénard et Vincent Capin · Kenza Bénard et Hugo Lucciano · Alexandre Kangol et Paul Green · Alexandre Kangol et Vincent Capin · Alexandre Kangol et Hugo Lucciano · Alexandre Kangol et Inès Barka · Paul Green et Hugo Lucciano · Paul Green et Inès Barka · Vincent Capin et Hugo Lucciano · Hugo Lucciano et Inès Barka</td></tr><tr><td>⚪ indifférence</td><td>Kenza Bénard et Alexandre Kangol</td></tr><tr><td>🔴 conflit</td><td>Kenza Bénard et Paul Green · Kenza Bénard et Inès Barka</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Dessine sur ton ordinateur l'organigramme d'OXO, puis ajoute les relations avec trois couleurs (sociogramme).</p></div>
+      <div class="question"><span class="q-num">2</span><p>Explique l'avantage du sociogramme par rapport à un organigramme classique.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Relève une relation de coopération et une relation de conflit.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> En haut : Kenza Bénard. En dessous : Alexandre Kangol et Paul Green. Sous Alexandre Kangol : Vincent Capin. Sous Paul Green : Hugo Lucciano et Inès Barka. Traits verts pour la coopération, noir pour l'indifférence, rouges pour les conflits.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Il montre les liens hiérarchiques (formels) et aussi les liens informels entre les personnes. Il aide à comprendre les problèmes humains cachés derrière les fonctions et à savoir par qui passer, ou qui éviter, pour obtenir la décision.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Coopération : entre le directeur marketing, le directeur commercial et leurs assistants. Conflit : entre la directrice et l'assistante commerciale, et entre la directrice et le directeur commercial.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 14</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Les intervenants dans l'achat d'un CRM</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">RESO propose à OXO un CRM et des applications commerciales pour tablettes.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quel type de processus d'achat est concerné ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Qui sont les personnes à approcher en priorité ? Justifie avec le sociogramme.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Paul Green est-il un bon prescripteur auprès de la directrice ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Un processus B to B, multi-décisionnel.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Les assistants marketing et commercial (coopération avec la directrice) et le directeur marketing (au pire, indifférence avec elle).</div>
+      <div class="corr-etape"><span class="c-num">3</span> Non : si la directrice est la décisionnaire, le directeur commercial n'est sans doute pas le meilleur prescripteur, car leur relation est conflictuelle.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 15</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Stratégie d'approche : rendez-vous avec Inès Barka</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Le rendez-vous est pris avec Inès Barka, assistante commerciale.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quel problème pose ce rendez-vous ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Propose une stratégie d'approche en 3 étapes.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Joue la première minute de l'entretien avec un binôme qui joue Inès Barka.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> cherche dans le sociogramme les personnes en coopération avec Inès Barka, puis avec la directrice.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Inès Barka est en conflit avec la directrice, qui semble être la décisionnaire.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Stratégie possible : s'appuyer sur Inès Barka, aidée d'Hugo Lucciano, pour convaincre l'assistant marketing et le directeur marketing, qui pourront à leur tour convaincre la directrice.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Attendus du jeu de rôle : présentation, objet du rendez-vous, question ouverte sur les besoins de l'équipe commerciale.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 16</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Le sociogramme de ta situation</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta fiche descriptive E5 doit présenter les interlocuteurs, leur fonction et leur rôle dans la situation d'achat.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Dessine sur ton ordinateur l'organigramme simplifié de ton client ou prospect.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Ajoute les liens informels que tu connais (coopération, indifférence, conflit).</p></div>
+      <div class="question"><span class="q-num">3</span><p>Explique en 1 minute à qui tu t'adresses et pourquoi.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Attendus : nom et fonction de chaque interlocuteur, rôle dans le centre d'achat (décideur, prescripteur…), liens repérés.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Si tu ne connais pas les liens informels, dis-le : c'est une information à rechercher, pas à inventer.</div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 6 -->
+<div class="bloc-titre" id="crm" style="margin-top:40px">
+  <span class="icone">🗂️</span>
+  <h2><small>Séance 6</small>Bloc 6 – Centraliser les informations clients</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Connaître ses clients = adapter l'offre, fidéliser, développer le chiffre d'affaires.</code>
+  <code>CRM (customer relationship management) = GRC, gestion de la relation client : centraliser et enrichir les données.</code>
+  <code>Rubriques d'une fiche : identification · qualification · historique de la relation · informations complémentaires · visites sur le site.</code>
+  <code>Exploiter les données = mesurer la rentabilité de chaque client et affecter les moyens commerciaux selon sa fidélité et son potentiel.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 17</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Ranger les informations d'OXO</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Tu mets à jour la fiche d'OXO dans le CRM de RESO. Tu as noté ces informations en vrac.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>N°</th><th>Information</th></tr></thead><tbody><tr><td>1</td><td>Numéro SIREN</td></tr><tr><td>2</td><td>Inès Barka, assistante commerciale, mail et téléphone</td></tr><tr><td>3</td><td>Réclamation de mars sur un bug de synchronisation</td></tr><tr><td>4</td><td>Effectif : 45 salariés</td></tr><tr><td>5</td><td>A téléchargé la fiche technique de l'application tablette</td></tr><tr><td>6</td><td>Processus de décision : validation par la directrice</td></tr><tr><td>7</td><td>Commandes de licences chaque année en janvier</td></tr><tr><td>8</td><td>Raison sociale et adresse</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Range chaque information dans une rubrique de la fiche B to B.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quelle rubrique te sera la plus utile pour préparer l'entretien ? Pourquoi ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Rubrique</th><th>Informations</th></tr></thead><tbody><tr><td>Identification</td><td class="val">2, 8</td></tr><tr><td>Qualification</td><td class="val">1, 4</td></tr><tr><td>Historique de la relation</td><td class="val">3, 7</td></tr><tr><td>Informations complémentaires</td><td class="val">6</td></tr><tr><td>Visites sur le site</td><td class="val">5</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Réponse ouverte et justifiée. Par exemple, l'historique (réclamation à traiter) ou les visites (intérêt pour l'application tablette).</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 18</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">B to C et B to B : quelles différences ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Bureau Plus, distributeur, vend aussi à des particuliers. Son responsable te demande quelles données collecter selon le type de client.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Donne 3 informations de qualification pour un particulier et 3 pour une entreprise.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Explique pourquoi les fiches sont différentes.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Particulier : date de naissance, situation familiale, situation professionnelle, tranche de revenus. Entreprise : secteur d'activité, taille, structure juridique, SIREN, chiffre d'affaires, effectifs.</div>
+      <div class="corr-etape"><span class="c-num">2</span> En B to B, on vend à une organisation avec plusieurs interlocuteurs et un processus de décision : la fiche décrit l'entreprise et ses contacts.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 19</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Pourquoi enrichir la base ?</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Un commercial de RESO dit : « je connais mes clients par cœur, je n'ai pas besoin de remplir le CRM ».</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Donne 3 arguments pour le convaincre.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Présente-les à l'oral en 45 secondes, comme en réunion d'équipe.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> La base est la mémoire de l'entreprise : elle reste si le commercial part · elle permet des tris et des analyses · elle aide à repérer les clients les plus rentables · elle assure la traçabilité des échanges (compétence C1.5).</div>
+      <div class="corr-etape"><span class="c-num">2</span> <p class="conclu">La mise à jour de la base de données client fait partie du suivi d'une affaire.</p></div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 7 -->
+<div class="bloc-titre" id="leads" style="margin-top:40px">
+  <span class="icone">🎯</span>
+  <h2><small>Séance 7</small>Bloc 7 – Qualifier un prospect</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Lead = prospect identifié, à qualifier.</code>
+  <code>3 étapes : rechercher les leads dans un fichier (Mixdata) → visiter le site du prospect → entrer le prospect dans le CRM s'il est intéressant.</code>
+  <code>Qualifier = compléter l'identification par des informations utiles à la vente.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 20</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Le fichier loué par Prisme</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte"><strong>Prisme</strong>, cliente de RESO, est spécialisée dans le transport transfrontalier de colis pour le compte d'e-commerçants. Ta tutrice t'envoie observer son équipe, qui a loué un fichier de 1 500 entreprises à Mixdata, un moteur de recherche d'entreprises. Méthode de Prisme : 1. rechercher les leads dans le fichier · 2. visiter le site du prospect · 3. l'entrer dans le CRM s'il est intéressant. Voici les champs du fichier.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Champ</th><th>Champ</th></tr></thead><tbody><tr><td>nom de l'entreprise</td><td>nom du contact</td></tr><tr><td>titre du contact</td><td>adresse et code postal</td></tr><tr><td>téléphone</td><td>courriel</td></tr><tr><td>site web</td><td>activité</td></tr><tr><td>chiffre d'affaires à l'export</td><td></td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quels champs sont des informations d'identification ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel est l'intérêt pour Prisme de connaître le chiffre d'affaires à l'export des prospects ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Nom de l'entreprise et du contact, titre, adresse, téléphone, code postal, courriel, site web, activité.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Plus ce chiffre d'affaires est élevé, plus l'entreprise a besoin d'un transporteur transfrontalier pour livrer ses commandes : il mesure le potentiel du prospect.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 21</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Ce qui manque encore</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Le prospect étudié est un e-commerçant de bijoux et de montres. Le fichier indique son chiffre d'affaires à l'export, mais pas encore comment il exporte.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quelle information manque sur sa façon d'exporter ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel est l'intérêt de consulter son site ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> La ou les destinations d'envoi des colis.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Trouver le nom des transporteurs actuels de l'entreprise, donc les concurrents de Prisme.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 22</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Du site au CRM</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Après la visite du site du prospect, l'équipe de Prisme a noté : coordonnées complètes · jours et horaires d'ouverture · modes de livraison proposés aux clients · nom des transporteurs actuels · recours à des coursiers pour livrer la banlieue parisienne.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quelles informations sont les plus utiles pour préparer l'entretien ? Justifie.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Quel est l'intérêt d'entrer toutes ces informations dans le CRM ?</p></div>
+      <div class="question"><span class="q-num">3</span><p>Classe ces informations dans les rubriques de la fiche client (bloc 6).</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Les plus utiles : le nom des transporteurs actuels (ce sont les concurrents de Prisme), les modes de livraison et le recours à des coursiers (besoins à satisfaire). Les horaires servent à choisir le bon moment pour appeler.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Une qualification très poussée du prospect : lors des appels, le commercial avance des arguments auxquels le prospect sera sensible.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Exemple : coordonnées en identification · modes de livraison et transporteurs en informations complémentaires.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 23</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Qualifier ton propre prospect</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Pour ta fiche descriptive E5, tu dois présenter l'historique du contact et le parcours phygital du prospect.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Liste les informations que tu possèdes déjà sur ton client ou prospect.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Liste celles qui manquent et indique où les trouver (site, réseaux professionnels, tuteur, CRM).</p></div>
+      <div class="question"><span class="q-num">3</span><p>Présente en 1 minute comment il est entré dans le portefeuille de ton entreprise.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Attendus : identification complète, qualification, historique de la relation, source du contact (salon, appel entrant, site…).</div>
+      <div class="corr-etape"><span class="c-num">2</span> Toute information non vérifiée doit être présentée comme une hypothèse devant le jury.</div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 8 -->
+<div class="bloc-titre" id="donnees" style="margin-top:40px">
+  <span class="icone">📊</span>
+  <h2><small>Séance 8</small>Bloc 8 – Diagnostic, segmentation, scoring</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Diagnostic capital client = portrait-robot (persona) à partir des données descriptives et comportementales.</code>
+  <code>Segmentation = groupes homogènes selon la fréquence, la récence et le montant des achats (RFM).</code>
+  <code>Scoring = note qui classe les clients selon leur potentiel, pour choisir les clients prioritaires.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 24</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">L'offre de l'entreprise Excellence</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta responsable chez RESO cherche un moyen de mieux comprendre et cibler les prospects, et de fidéliser les clients. Tu as trouvé l'offre de l'entreprise <strong>Excellence</strong>.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Offre Excellence</th><th>Contenu</th></tr></thead><tbody><tr><td>Bénéfice</td><td>délivrez les messages les plus en affinité avec vos clients</td></tr><tr><td>Avantage</td><td>meilleure connaissance client</td></tr><tr><td>Caractéristique</td><td>analyse des données descriptives et comportementales de votre base de données clients</td></tr><tr><td>Diagnostic capital client</td><td>portrait-robot de vos clients à partir des indicateurs clés, qui met en lumière différents profils de consommation</td></tr><tr><td>Segmentation client</td><td>groupes d'acheteurs homogènes selon la fréquence, la récence et le montant de leurs paniers d'achat, associés à un type d'offre et un message</td></tr><tr><td>Scoring client</td><td>clients hiérarchisés selon leur potentiel (plus susceptibles de partir, d'accepter une offre…), grâce à des scores de probabilité</td></tr><tr><td>Bénéfices complémentaires</td><td>exploiter la richesse des fichiers clients · optimiser les messages · détecter de nouvelles opportunités d'offres · enrichir la base de données · transformer des prospects en clients</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Relève les intérêts de cette offre.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Explique en une phrase chaque niveau d'analyse : diagnostic, segmentation, scoring.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Un outil pour mieux cibler les clients en s'adaptant à leurs profils, grâce à l'étude des données de la base clients.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Diagnostic : portrait-robot (persona) des clients · segmentation : segments homogènes selon fréquence, récence et montant, avec une offre et un message adaptés · scoring : hiérarchiser les clients selon leur potentiel, grâce à des scores de probabilité.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 25</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Calculer un score RFM</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta tutrice te demande de classer 5 clients de RESO. Règle de notation : <strong>récence</strong> (mois depuis le dernier achat) : 3 mois ou moins = 3 pts, 4 à 8 = 2 pts, plus de 8 = 1 pt · <strong>fréquence</strong> (commandes par an) : 6 ou plus = 3 pts, 3 à 5 = 2 pts, 2 ou moins = 1 pt · <strong>montant</strong> (par an) : 20 000 € ou plus = 3 pts, 8 000 à 19 999 € = 2 pts, moins de 8 000 € = 1 pt.</div>
+    <div class="table-wrap"><table class="tableau-donnees"><thead><tr><th>Client</th><th>Récence</th><th>Fréquence</th><th>Montant</th></tr></thead><tbody><tr><td>Boulangerie Lemoine</td><td>2 mois</td><td>10</td><td>6 500 €</td></tr><tr><td>Clinique des Tilleuls</td><td>5 mois</td><td>4</td><td>24 000 €</td></tr><tr><td>Communauté de communes</td><td>11 mois</td><td>1</td><td>30 000 €</td></tr><tr><td>OXO</td><td>1 mois</td><td>7</td><td>21 000 €</td></tr><tr><td>Garage Duval</td><td>14 mois</td><td>2</td><td>3 000 €</td></tr></tbody></table></div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Calcule le score RFM de chaque client (sur 9).</p></div>
+      <div class="question"><span class="q-num">2</span><p>Classe les clients du plus prioritaire au moins prioritaire.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Propose une action commerciale pour OXO et pour le Garage Duval.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> additionne les trois notes : R + F + M.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> <div class="table-wrap"><table class="tableau-corr"><thead><tr><th>Client</th><th>R + F + M</th><th>Score</th></tr></thead><tbody><tr><td>OXO</td><td>3 + 3 + 3</td><td class="val">9</td></tr><tr><td>Boulangerie Lemoine</td><td>3 + 3 + 1</td><td class="val">7</td></tr><tr><td>Clinique des Tilleuls</td><td>2 + 2 + 3</td><td class="val">7</td></tr><tr><td>Communauté de communes</td><td>1 + 1 + 3</td><td class="val">5</td></tr><tr><td>Garage Duval</td><td>1 + 1 + 1</td><td class="val">3</td></tr></tbody></table></div></div>
+      <div class="corr-etape"><span class="c-num">2</span> Ordre : OXO, puis Lemoine et Clinique (à égalité), puis Communauté de communes, puis Garage Duval.</div>
+      <div class="corr-etape"><span class="c-num">3</span> OXO : fidéliser, proposer de nouvelles applications (partenariat durable). Garage Duval : relance ou action de reconquête peu coûteuse (mail, appel).</div>
+      <div class="corr-etape"><span class="c-num">4</span> <p class="conclu">Les données de cet exercice sont fictives : elles servent à appliquer la méthode.</p></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 26</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Convaincre ta responsable</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta responsable hésite à investir dans l'outil d'Excellence (ex. 24).</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Prépare une présentation de 2 minutes pour convaincre ta responsable d'investir dans l'outil d'Excellence.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Passe à l'oral. Les autres notent un point fort et un point à améliorer.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> un argument = une caractéristique + un avantage + une preuve.</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Idées attendues : l'offre répond au besoin de mieux comprendre et cibler les prospects puis de fidéliser · des fichiers mieux analysés permettent d'optimiser les messages · une base enrichie aide à détecter de nouvelles opportunités et à développer le chiffre d'affaires.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Grille d'écoute : structure claire, arguments adaptés au besoin de la responsable, conclusion qui demande une décision.</div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 9 -->
+<div class="bloc-titre" id="strategie" style="margin-top:40px">
+  <span class="icone">♟️</span>
+  <h2><small>Séance 9</small>Bloc 9 – Préparer la stratégie de négociation</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Persona = portrait-robot d'un client type, avec un nom, un profil et des motivations. En B to B : lieu de travail, liens hiérarchiques, encadrement.</code>
+  <code>Objectifs : qualitatifs et quantitatifs, avec hypothèse haute, basse et de repli. Ils sont mesurables, cohérents, hiérarchisés et clairs.</code>
+  <code>Stratégie intégrative (gagnant-gagnant) plutôt que distributive (gagnant-perdant), en anticipant ses marges de manœuvre et celles du client.</code>
+  <code>Anticiper le déroulement : plan d'action, outils d'aide à la vente (plan de questionnement), pitch.</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 27</span>
+    <span class="badge badge-1">⬆ décollage</span>
+    <span class="exo-titre-txt">Créer le persona « responsable commercial de PME »</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Dans le CRM de RESO, la plupart des décideurs des PME clientes sont des responsables commerciaux de 35 à 50 ans, qui encadrent 3 à 8 commerciaux itinérants et passent beaucoup de temps sur la route.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Donne un prénom et un nom à ce persona.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Décris son profil B to B : lieu de travail, liens hiérarchiques, encadrement.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Indique 2 motivations et 1 frein probables.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Exemple : « Marc, 42 ans, responsable commercial d'une PME industrielle, rattaché au dirigeant, manage 5 commerciaux sur le terrain ».</div>
+      <div class="corr-etape"><span class="c-num">2</span> Motivations possibles : suivre l'activité de son équipe à distance, gagner du temps. Frein possible : peur que l'équipe refuse un nouvel outil.</div>
+      <div class="corr-etape"><span class="c-num">3</span> <p class="conclu">Un persona aide à adapter l'argumentation, mais il ne remplace pas la découverte du vrai client.</p></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 28</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Fixer les objectifs du rendez-vous chez OXO</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Tu prépares le rendez-vous chez OXO. Ta tutrice veut équiper toute l'équipe commerciale (2 assistants et le directeur) avec le CRM et l'application tablette.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Formule un objectif en hypothèse haute, basse et de repli.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Ajoute un objectif qualitatif.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Vérifie que chaque objectif est mesurable.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> exemple : « vendre deux modules de formation (haute), un module (basse), ou seulement faire accepter un devis (repli) ».</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Haute : signer le CRM et l'application tablette pour 3 utilisateurs · basse : signer le CRM seul · repli : obtenir l'accord pour un devis et un second rendez-vous avec la directrice.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Qualitatif : identifier qui décide réellement et obtenir le contact du directeur marketing.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Chaque objectif se vérifie après l'entretien : oui ou non, combien.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 29</span>
+    <span class="badge badge-2">◆ intermédiaire</span>
+    <span class="exo-titre-txt">Marges de manœuvre et stratégie</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">OXO trouve le prix trop élevé. RESO peut accorder au maximum une remise de 5 % ou 3 mois de formation gratuite.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Quelle stratégie choisir : distributive ou intégrative ? Justifie.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Propose une concession et une contrepartie à demander.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Que fais-tu si OXO demande 15 % de remise ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Intégrative : chercher un accord gagnant-gagnant qui préserve la relation durable.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Exemple : accorder la formation gratuite en échange d'un engagement sur 2 ans ou d'une signature rapide.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Refuser au-delà de la marge de manœuvre, rappeler la valeur de l'offre, proposer une solution alternative (moins de licences, paiement échelonné si l'entreprise l'autorise).</div>
+      <div class="corr-etape"><span class="c-num">4</span> <p class="conclu">Défendre les marges fait partie de la compétence C1.3.</p></div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 30</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Le pitch d'accroche</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Le commercial doit préparer un pitch percutant pour capter l'attention de son interlocuteur.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Rédige un pitch de 30 secondes pour ouvrir l'entretien avec Inès Barka.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Dis-le à voix haute, chronométré. Le groupe vote pour le pitch le plus convaincant.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Structure possible : qui tu es · pourquoi tu viens (le problème du client) · ce que tu peux apporter · une question ouverte pour lancer la découverte.</div>
+    </div>
+  </div>
+</details>
+<hr class="section-sep">
+
+<!-- BLOC 10 -->
+<div class="bloc-titre" id="examen" style="margin-top:40px">
+  <span class="icone">🎓</span>
+  <h2><small>Séance 10</small>Bloc 10 – Entraînement à l'épreuve E5</h2>
+</div>
+<div class="memo">
+  <div class="memo-titre">🗂 mémo</div>
+  <code>Épreuve E5 – conception et négociation de solutions technico-commerciales (anciennement E4).</code>
+  <code>Situation 1 : présentation orale de la préparation d'un entretien (20 min au maximum) + entretien avec la commission (10 min au maximum).</code>
+  <code>Situation 2 : négociation simulée à partir de la situation modifiée (15 à 20 min) + entretien (10 min au maximum).</code>
+</div>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 31</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Sujet complet : présenter le contexte RESO – OXO</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Tu présentes à la commission la préparation de ton entretien avec Inès Barka chez OXO (blocs 1 à 9).</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Présente en 5 minutes : les acteurs (RESO, OXO, interlocuteurs et rôles), l'historique de la relation, les objectifs, la stratégie et les outils.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Le groupe évalue avec les critères : contexte et attentes identifiés · objectifs définis et adaptés · outils de négociation préparés.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Plan attendu : 1. RESO et son offre · 2. OXO, type de client, centre d'achat et sociogramme · 3. historique et données du CRM (score RFM 9/9) · 4. objectifs haut, bas, repli · 5. stratégie d'approche par Inès Barka et Hugo Lucciano · 6. outils : plan de découverte, pitch, réponses aux freins.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 32</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Les questions de la commission</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Après ta présentation, la commission t'interroge pendant 10 minutes au maximum.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Pourquoi passer par Inès Barka alors que la directrice décide ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Comment savez-vous qu'OXO est un client prioritaire ?</p></div>
+      <div class="question"><span class="q-num">3</span><p>Quelles informations vous manquent sur ce client ?</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Parce que c'est l'interlocutrice disponible, et qu'elle peut mobiliser Hugo Lucciano et l'équipe marketing, qui ont de bonnes relations avec la directrice.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Par l'analyse des données du CRM : récence, fréquence et montant élevés.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Réponse honnête et précise : le budget, le rôle exact de chacun dans la décision, les solutions concurrentes étudiées.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 33</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Changement de paramètre</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">La commission modifie la situation : Inès Barka a quitté OXO. Le rendez-vous est maintenu avec <strong>Paul Green</strong>, directeur commercial.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Que change ce nouvel interlocuteur pour ta stratégie ?</p></div>
+      <div class="question"><span class="q-num">2</span><p>Reformule tes objectifs.</p></div>
+      <div class="question"><span class="q-num">3</span><p>Joue les 3 premières minutes de l'entretien avec un binôme.</p></div>
+    </div>
+    <div class="ordre-grandeur"><strong>Coup de pouce :</strong> relis le sociogramme d'OXO (bloc 5) : quelle est la relation de Paul Green avec la directrice ?</div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Paul Green est en conflit avec la directrice : il n'est sans doute pas le meilleur prescripteur auprès d'elle. Il coopère avec le directeur marketing, qui peut servir de relais.</div>
+      <div class="corr-etape"><span class="c-num">2</span> Exemple : objectif haut maintenu si Paul Green a le pouvoir de décision sur ce budget · objectif de repli : obtenir une réunion commune avec le directeur marketing.</div>
+      <div class="corr-etape"><span class="c-num">3</span> Attendus : prise de contact adaptée, questions de découverte sur ses attentes de directeur commercial.</div>
+    </div>
+  </div>
+</details>
+
+<details class="exo-card">
+  <summary class="exo-header">
+    <span class="exo-num">Ex. 34</span>
+    <span class="badge badge-exam">★ examen</span>
+    <span class="exo-titre-txt">Check-list de ta fiche descriptive</span>
+    <span class="chevron">▼</span>
+  </summary>
+  <div class="exo-body">
+    <div class="contexte">Ta fiche descriptive doit être rendue en février.</div>
+    <div class="questions">
+      <div class="question"><span class="q-num">1</span><p>Vérifie que ta fiche contient : les acteurs, l'historique du contact, le risque client et affaire, les informations clés, la stratégie et les outils.</p></div>
+      <div class="question"><span class="q-num">2</span><p>Note les 3 éléments à compléter en priorité.</p></div>
+    </div>
+    <button class="btn-corrige" onclick="toggleCorr(this)">✅ Voir la correction</button>
+    <div class="correction">
+      <div class="corr-etape"><span class="c-num">1</span> Contenu attendu : description des acteurs (identité, interlocuteurs, fonctions, rôles dans la situation d'achat) · historique du contact et de la relation · risque affaire et risque client · synthèse des informations clés · stratégie de négociation (objectifs et outils) · annexes (plan de découverte, argumentaires, fiche de traitement des objections…).</div>
+    </div>
+  </div>
+</details>
+</main>
+
+<footer class="site-footer">
+  BTS CCST – Bloc 1, épreuve E5 &nbsp;|&nbsp; Chapitre 8 : approfondir la connaissance client &nbsp;|&nbsp; 34 exercices progressifs
+</footer>
+
+<script>
+function toggleCorr(btn) {
+  const corr = btn.nextElementSibling;
+  const isVisible = corr.classList.contains('visible');
+  corr.classList.toggle('visible', !isVisible);
+  btn.textContent = isVisible ? '✅ Voir la correction' : '🔒 Masquer la correction';
+}
+</script>
+</body>
+</html>
